@@ -1,0 +1,103 @@
+import discord
+import aiofiles
+import time
+import datetime
+from discord.ext import commands
+from discord.utils import get
+#prefix
+bot = commands.Bot(command_prefix="-")
+bot.warnings = {}#guild_id : {member_id: [count, [(admin_id, reason)]]}
+#bot opening ready
+@bot.event
+async def on_ready():
+        print("READY")
+
+@bot.event
+async def on_member_join(ctx, member : discord.Member):
+        channelwel = '816231680972292107'
+        embed=discord.Embed(title=f"{member.name}", description=' ', color=discord.Color.blue())
+        embed.add_field(name="Welcome", value='Hi {member.name} we at Geofs Airlines are trying to make your flying easier with premade flight plans and more! Hop you stay with us long!', inline=False)
+        message = await channelwel.send(embed=embed)
+
+
+
+@bot.command()
+async def commands(ctx):
+        embed=discord.Embed(title="Commands", description=' ', color=discord.Color.blue())
+        embed.add_field(name="-server", value='shows the server information.', inline=False)
+        embed.add_field(name="-requesttraning", value='pings a trainer to get in the training queue', inline=False)
+        embed.add_field(name="-requestinterview", value='pings a interviewer to get in the interview queue', inline=False)
+        embed.add_field(name="-whois", value='you can get information on our members on the server', inline=False)
+        embed.add_field(name="-invite", value='you get a link to invite the bot', inline=False)
+        message = await ctx.send(embed=embed)
+
+
+
+@bot.command()
+async def server(ctx):
+        coder = discord.utils.get(ctx.guild.roles, id=762213101436796948)
+        moderator = discord.utils.get(ctx.guild.roles, id=815911220749008946)
+        founder = discord.utils.get(ctx.guild.roles, id=815911298176516136)
+
+        embed=discord.Embed(title="Server Info", description=f'Hey {ctx.author.mention} this is our personalized bot made by us! If you have any questions please ask a Founder or the creator of the server rockytown2008!', color=discord.Color.blue())
+        message = await ctx.send(embed=embed)
+    
+@bot.command()
+async def requesttraning(ctx):
+        moderator = discord.utils.get(ctx.guild.roles, id=815911220749008946)
+
+        await ctx.send(f'{moderator.mention}')
+
+        embed=discord.Embed(title="Training requested", description=f'Hey {ctx.author.mention} I have requested training from a {moderator.mention} please wait for more information for training!', color=discord.Color.blue())
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def requestinterview(ctx):
+        moderator = discord.utils.get(ctx.guild.roles, id=815911220749008946)
+        await ctx.send(f'{moderator.mention}')
+        embed=discord.Embed(title="Interview requested", description=f'Hey {ctx.author.mention} I have requested an interview from a {moderator.mention} please wait for more information for the interview!', color=discord.Color.blue())
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def REC(ctx):
+        pilot = discord.utils.get(ctx.guild.roles, id=815910890154754048)
+        first = discord.utils.get(ctx.guild.roles, id=815910953707110430)
+        rocky = discord.utils.get(ctx.guild.roles, id=62213101436796948)
+
+        embed=discord.Embed(title='Recrutment for Interviewer', description=' ', color=discord.Color.blue())
+        embed.add_field(name="How to join?", value=f'Type to stratfurt', inline=False)
+        embed.add_field(name="Requirements", value='Need to have 12 or more yeats old, Must be pilot in training and higher, must be on the server as a first officer for at least 1 week.', inline=False)
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def warn(ctx, member : discord.Member, *, reason = None):
+        embed=discord.Embed(title=f':warning:Warning {member.name} :warning:', description=f'Hey {member.mention} you have just reacieved a warning watch out!', color=discord.Color.blue())
+        embed.add_field(name="Reason", value=reason, inline=True)
+        message = await ctx.send(embed=embed)
+        
+@bot.command()
+async def whois(ctx, member : discord.Member):
+        embed=discord.Embed(title=f'{member.name}', description=' ', color=discord.Color.blue())
+        embed.add_field(name="User Id", value=f'{member.id}', inline=False)
+        embed.add_field(name="User Name", value=f'{member.name}', inline=False)
+        await ctx.send(embed=embed)
+
+@bot.command()
+async def invite(ctx):
+        embed = discord.Embed(title='Invite Link', description='Here is the link bellow', color=discord.Color.blue())
+        embed.add_field(name="Invite", value='https://discord.com/api/oauth2/authorize?client_id=815916789954904074&permissions=0&scope=bot', inline=False)
+        await ctx.send(embed=embed)
+
+
+@bot.command()
+async def bottest (ctx):
+        tday = datetime.date.today() 
+        embed = discord.Embed(title='Bot Status', description=' ', color=discord.Color.blue())
+        embed.add_field(name="BOT STATUS", value=':white_check_mark: All good :white_check_mark: ', inline=True)
+        embed.add_field(name="Date Checked", value=(tday), inline=True)
+        await ctx.send(embed=embed)
+
+
+
+#bot token              
+bot.run("ODE1OTE2Nzg5OTU0OTA0MDc0.YDzXuQ.3AMCYn4xQS8SMzYWcPGm-2-FtHQ")
